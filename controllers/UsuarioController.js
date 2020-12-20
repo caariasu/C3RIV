@@ -16,7 +16,7 @@ module.exports = {
     register : async (req, res, next) => {
         try{
             req.body.password = bcrypt.hashSync(req.body.password, 10);
-            const user = await User.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol})
+            const user = await Usuario.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol, email: req.body.email, estado: 1})
             res.status(200).json(user)
             
         } catch (error) {
