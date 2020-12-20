@@ -42,7 +42,7 @@ module.exports = {
     },
     update : async (req, res, next) => {
         try {
-            const re = await Articulo.update( { categoria: req.body.categoria, rol: req.body.rol, nombre: req.body.nombre, tipo_documento: req.body.tipo_documento, direccion: req.body.direccion, telefono: req.body.telefono, email: req.body.email, password: req.body.password, num_documento: req.body.num_documento}, {where: {id:req.body.id}} )
+            const re = await Usuario.update( { categoria: req.body.categoria, rol: req.body.rol, nombre: req.body.nombre, tipo_documento: req.body.tipo_documento, direccion: req.body.direccion, telefono: req.body.telefono, email: req.body.email, password: req.body.password, num_documento: req.body.num_documento}, {where: {id:req.body.id}} )
         } catch (error) {
             res.status(500).json({ 'error' : 'Oops, algo pasó' })
             next(error)
