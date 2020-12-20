@@ -16,7 +16,7 @@ module.exports = {
     register : async (req, res, next) => {
         try{
             req.body.password = bcrypt.hashSync(req.body.password, 10);
-            const user = await User.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol, estado: 1 })
+            const user = await User.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol})
             res.status(200).json(user)
             
         } catch (error) {
@@ -32,7 +32,7 @@ module.exports = {
                 if (contraseñaValida) {
                     const token = servToken.enconde(user.id, user.rol)
 
-                    res.status(200).sent({
+                    res.status(200).send({
                         auth: true,
                         tokenReturn : token,
                         user : user
