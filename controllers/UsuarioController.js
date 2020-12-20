@@ -14,7 +14,14 @@ module.exports = {
         }
     },
     register : async (req, res, next) => {
-        res.status(200).send('Lo haremos en el sprint 3')
+        try{
+            req.body.password = bcrypt.hashSync(req.body.password, 10);
+            const user = await User.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol, estado: 1 })
+            res.status(200).json(user)
+            
+        } catch (error) {
+            res.status(500)
+        }
     },
     login : async (req, res, next) => {
         try {
