@@ -4,8 +4,8 @@
         "password": "VPMEfk2wo4",
         "database": "Zk3925qScM",
         "host": "remotemysql.com",
-        "dialect": "mysql",
-        "port": "3306"
+        "port": "3306",
+        "dialect": "mysql"
     },
     "test": {
         "dialect": "sqlite",

@@ -18,7 +18,7 @@ module.exports = {
     },
     login : async (req, res, next) => {
         try {
-            const user = await User.findOne( { where : { email : req.body.email } } )
+            const user = await Usuario.findOne( { where : { email : req.body.email } } )
             if (user) {
                 // Evaluar contraseña
                 const contraseñaValida = bcrypt.compareSync(req.body.password, user.password)
