@@ -24,14 +24,16 @@ module.exports = {
         }
     },
     login : async (req, res, next) => {
+        
         try {
             const user = await Usuario.findOne( { where : { email : req.body.email } } )
             if (user) {
+                
                 // Evaluar contraseña
                 const contraseñaValida = bcrypt.compareSync(req.body.password, user.password)
+                
                 if (contraseñaValida) {
-                    const token = servToken.enconde(user.id, user.rol)
-
+                    const token = servToken.encode(user.id, user.rol)
                     res.status(200).send({
                         auth: true,
                         tokenReturn : token,
@@ -44,7 +46,8 @@ module.exports = {
                 res.status(404).send('Usuario no existe')
             }
         } catch (error) {
-            res.status(500).json({ 'error' : 'Oops! Something wrong.'})
+            res.status(500).send( 'Oops! Something wrong.')
+            
         }
     },
     update : async (req, res, next) => {
