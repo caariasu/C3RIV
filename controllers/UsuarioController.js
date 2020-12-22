@@ -13,7 +13,7 @@ module.exports = {
             next()
         }
     },
-    register : async (req, res, next) => {
+    add : async (req, res, next) => {
         try{
             req.body.password = bcrypt.hashSync(req.body.password, 10);
             const user = await Usuario.create({nombre: req.body.nombre, password: req.body.password, rol: req.body.rol, email: req.body.email, estado: 1})
@@ -40,7 +40,7 @@ module.exports = {
                         user : user
                     })
                 }else{
-                    res.status(401).send({ auth: false, tokenReturn: null, reason: "Invalid Password!"})
+                    res.status(401).send({ auth: false, tokenReturn: null, reason: "Contraseña invalida!"})
                 }
             } else {
                 res.status(404).send('Usuario no existe')
@@ -52,10 +52,38 @@ module.exports = {
     },
     update : async (req, res, next) => {
         try {
-            const re = await Usuario.update( { categoria: req.body.categoria, rol: req.body.rol, nombre: req.body.nombre, tipo_documento: req.body.tipo_documento, direccion: req.body.direccion, telefono: req.body.telefono, email: req.body.email, password: req.body.password, num_documento: req.body.num_documento}, {where: {id:req.body.id}} )
+            const user = await Usuario.findOne( { where : { email : req.body.email } } )
+
+            const contraseñaValida = bcrypt.compareSync(req.body.password, user.password)
+
+            const nuevaContraseñaEncrip = req.body.newpassword ? bcrypt.hashSync(req.body.newpassword) : user.password
+            if (contraseñaValida) {
+                const re = await Usuario.update( {nombre: req.body.nombre, email: req.body.email, estado: req.body.estado, password: nuevaContraseñaEncrip}, {where: {id:req.body.id}} )
+                res.status(200).send(re)
+            } else {
+                res.status(401).send({ auth: false, tokenReturn: null, reason: "Contraseña Invalida!" })
+            }    
+        } catch (error) {
+            res.status(500).json({ 'error' : 'Oops! Something wrong.' })
+            next(error)
+        }
+    },
+    activate : async (req, res, next) => {
+        try {
+            const re = await Usuario.update( { estado: 1 }, {where: {id:req.body.id}} )
+            res.status(200).json(re)
         } catch (error) {
             res.status(500).json({ 'error' : 'Oops, algo pasó' })
             next(error)
+        }
+    },
+    deactivate : async (req, res, next) =>  {
+        try {
+            const re = await Usuario.update( { estado: 0 }, {where: {id:req.body.id}} )
+            res.status(200).json(re)
+        } catch (error) {
+            res.status(500).json({ 'error' : 'Oops, algo pasó' })
+            next()
         }
     },
 }

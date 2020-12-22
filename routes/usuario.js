@@ -8,7 +8,10 @@ const router = routerx();
 
 router.get('/list', UsuarioController.list);
 router.post('/login', UsuarioController.login);
-router.post('/register', UsuarioController.register);
+router.post('/add', UsuarioController.add);
+router.put('/update', UsuarioController.update);
+router.put('/activate', UsuarioController.activate);
+router.put('/deactivate', UsuarioController.deactivate);
 
 
 module.exports = router;
