@@ -26,7 +26,7 @@ app.set('port', process.env.PORT || 3000);
 
 if (process.env.NODE_ENV !== 'test') {
     app.listen(app.get('port'), () => {
-        console.log('Server on port ' + app.get('port') + ' on dev');
+        console.log('Servidor en puerto ' + app.get('port') + ' en desarrollo.');
     });
 }
 

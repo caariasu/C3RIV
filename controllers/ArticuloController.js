@@ -1,9 +1,15 @@
-const { Articulo } = require('../models/');
+const { Articulo, Categoria } = require('../models/');
+const CategoriaController = require('./CategoriaController');
 
 module.exports = {
     list : async (req, res, next) => {
         try {
-            const re = await Articulo.findAll()
+            const re = await Articulo.findAll({
+                include: [{
+                    model: Categoria,
+                    as: 'categoria'
+                }],
+            });
             res.status(200).json(re)
         } catch (error) {
             res.status(500).json({ 'error' : 'Oops, algo pasó' })
@@ -13,7 +19,7 @@ module.exports = {
     },
     add : async (req, res, next) => {
         try {
-            const re = await Articulo.create(req.body)
+            const re = await Articulo.create({codigo: req.body.codigo, nombre: req.body.nombre, descripcion: req.body.descripcion, categoriaId: req.body.categoriaId, estado: 1})
             res.status(200).json(re)
         } catch (error) {
             res.status(500).json({ 'error' : 'Oops, algo pasó' })
