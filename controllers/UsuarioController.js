@@ -23,6 +23,15 @@ module.exports = {
             res.status(500)
         }
     },
+    eliminate : async (req, res, next) => {
+        try {
+            const re = await Usuario.destroy({where: {id:req.body.id}} )
+            res.status(200).json(re)
+        } catch (error) {
+            res.status(500).json({ 'error' : 'Oops, algo pasó' })
+            next(error)
+        }
+    },
     login : async (req, res, next) => {
         
         try {

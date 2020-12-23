@@ -8,6 +8,7 @@ const router = routerx();
 
 router.get('/list', categoriaController.list);
 router.post('/add', categoriaController.add);
+router.put('/eliminate', categoriaController.eliminate);
 router.put('/update', categoriaController.update);
 router.put('/activate', categoriaController.activate);
 router.put('/deactivate', categoriaController.deactivate);

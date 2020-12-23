@@ -9,6 +9,7 @@ const router = routerx();
 router.get('/list', UsuarioController.list);
 router.post('/login', UsuarioController.login);
 router.post('/add', UsuarioController.add);
+router.put('/eliminate', UsuarioController.eliminate);
 router.put('/update', UsuarioController.update);
 router.put('/activate', UsuarioController.activate);
 router.put('/deactivate', UsuarioController.deactivate);

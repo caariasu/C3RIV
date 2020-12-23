@@ -20,6 +20,15 @@ module.exports = {
             next(error)
         }
     },
+    eliminate : async (req, res, next) => {
+        try {
+            const re = await Categoria.destroy({where: {id:req.body.id}} )
+            res.status(200).json(re)
+        } catch (error) {
+            res.status(500).json({ 'error' : 'Oops, algo pasó' })
+            next(error)
+        }
+    },
     update : async (req, res, next) => {
         try {
             const re = await Categoria.update( { nombre: req.body.nombre, estado: req.body.estado, descripcion: req.body.descripcion}, {where: {id:req.body.id}} )
